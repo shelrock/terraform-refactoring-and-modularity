@@ -19,20 +19,39 @@ resource "aws_subnet" "sbn_puba" {
   }
 }
 
+# resource "aws_subnet" "sbn_pubc" {
+#   availability_zone       = var.az_c
+#   cidr_block              = var.pubc_cidr
+#   vpc_id                  = aws_vpc.vpc.id
+#   map_public_ip_on_launch = true
+
+#   tags = {
+#     Name    = "sbn-${var.env}-${var.pjt}-pubc",
+#     Service = "pubc"
+
+#     "kubernetes.io/cluster/eks-${var.env}-${var.pjt}-cluster" = "shared",
+#     "kubernetes.io/role/elb"                                  = 1
+#   }
+# }
+
+###n 수정 ###
+
 resource "aws_subnet" "sbn_pubc" {
-  availability_zone       = var.az_c
-  cidr_block              = var.pubc_cidr
-  vpc_id                  = aws_vpc.vpc.id
+  availability_zone       = local.az_c
+  cidr_block              = cidrsubnet(aws_vpc.common_vpc.cidr_block, 4, 0)
+  vpc_id                  = aws_vpc.common_vpc.id
   map_public_ip_on_launch = true
 
   tags = {
-    Name    = "sbn-${var.env}-${var.pjt}-pubc",
+    Name    = "sbn-${var.tag_middlename}-pubc",
     Service = "pubc"
 
-    "kubernetes.io/cluster/eks-${var.env}-${var.pjt}-cluster" = "shared",
-    "kubernetes.io/role/elb"                                  = 1
+    "kubernetes.io/cluster/eks-${var.tag_middlename}-cluster" = "shared",
+    "kubernetes.io/role/elb"                                  = "1"
   }
 }
+
+
 
 # Private subnet 2개
 locals {

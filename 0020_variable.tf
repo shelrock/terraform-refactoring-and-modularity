@@ -51,18 +51,39 @@ variable "region" {
   default = "ap-northeast-2"
 }
 
-variable "az_a" {
-  default = "ap-northeast-2a"
+# variable "az_a" {
+#   default = "ap-northeast-2a"
+# }
+
+# variable "az_c" {
+#   default = "ap-northeast-2c"
+# }
+
+### 수정 ###
+data "aws_region" "current" {} # aws provider에서 
+                               # 현재 region을 가져오기 위한 data source
+locals {
+  az_a  = "${data.aws_region.current.name}a" # 현재 region에 따라 az를 동적으로 가져오기 위해 data source 사용
+  az_c  = "${data.aws_region.current.name}c" # 현재 region에 따라 az를 동적으로 가져오기 위해 data source 사용
 }
 
-variable "az_c" {
-  default = "ap-northeast-2c"
-}
+
+
+# variable "vpc_cidr" {
+#   type    = string
+#   default = "100.64.0.0/16"
+# }
 
 variable "vpc_cidr" {
   type    = string
   default = "100.64.0.0/16"
+  description = "VPC의 CIDR 정의, 16비트 대역을 입력 (e.g. 100.64.0.0/16)
+  validation {
+  condition      = contains(split("/", var.vpc_cidr), "16")
+  error_message  = "CIDR은 16비트"
+  }
 }
+
 
 #####################
 # subnet
