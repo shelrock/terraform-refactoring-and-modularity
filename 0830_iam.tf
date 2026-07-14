@@ -8,6 +8,15 @@ resource "aws_iam_group_policy_attachment" "policy_attach_to_CloudArchitectureTe
   policy_arn = var.CloudArchitectureTeam_policy
 }
 
+# resource "aws_iam_user" "CloudArchitectureTeam_users" {
+#   count = length(var.CloudArchitectureTeam_users)
+#   name  = element(var.CloudArchitectureTeam_users, count.index)
+
+#   tags = {
+#     Name = "CloudArchitectureTeam_user"
+#   }
+# }
+
 resource "aws_iam_user" "CloudArchitectureTeam_users" {
   count = length(var.CloudArchitectureTeam_users)
   name  = element(var.CloudArchitectureTeam_users, count.index)
@@ -16,6 +25,9 @@ resource "aws_iam_user" "CloudArchitectureTeam_users" {
     Name = "CloudArchitectureTeam_user"
   }
 }
+
+
+
 
 resource "aws_iam_user_group_membership" "CloudArchitectureTeam_membership" {
   count = length(var.CloudArchitectureTeam_users)
