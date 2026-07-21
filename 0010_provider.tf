@@ -1,18 +1,18 @@
-terraform {
-  cloud {
-    organization = "LG-uplus"
-    hostname     = "app.terraform.io"
-    workspaces {
-      name = "iac-academy"
-    }
-  }
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 3.0.0, < 4.0.0"
-    }
-  }
-}
+# terraform {
+#   cloud {
+#     organization = "LG-uplus"
+#     hostname     = "app.terraform.io"
+#     workspaces {
+#       name = "iac-academy"
+#     }
+#   }
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = ">= 3.0.0, < 4.0.0"
+#     }
+#   }
+# }
 
 provider "aws" {
   region = var.region
